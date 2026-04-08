@@ -14,7 +14,6 @@ npm install
 PORT=3001
 MONGODB_URI=mongodb://localhost:27017/akalya-smart-learn
 JWT_SECRET=your-secret-key-change-in-production
-LOVABLE_API_KEY=your-lovable-api-key
 ```
 
 3. Make sure MongoDB is running on your system or update `MONGODB_URI` to point to your MongoDB instance.
