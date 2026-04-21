@@ -31,6 +31,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { format } from "date-fns";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { StudentWebsiteChatbot } from "@/components/StudentWebsiteChatbot";
 
 export default function StudentDashboard() {
   const { user } = useAuth();
@@ -895,6 +896,7 @@ const fetchMyQueries = async () => {
                     </div>
                   </CardContent>
                 </Card>
+                <StudentWebsiteChatbot />
               </div>
             );
           })()}

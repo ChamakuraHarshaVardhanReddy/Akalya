@@ -20,25 +20,28 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useTheme } from "@/contexts/ThemeContext";
-import { useState } from "react";
-
-const navLinks = [
-  { to: "/", label: "Home", icon: Home },
-  { to: "/scholarships", label: "Scholarships", icon: Award },
-  { to: "/entrance-exams", label: "Entrance Exams", icon: FileQuestion },
-  { to: "/jobs", label: "Jobs", icon: Briefcase },
-  { to: "/career-roadmap", label: "Career Roadmap", icon: Map },
-  { to: "/practice", label: "Practice", icon: BookOpen },
-  { to: "/test-series", label: "Test Series", icon: ClipboardList },
-  { to: "/locker", label: "My Locker", icon: FolderOpen },
-  { to: "/about", label: "About", icon: Info },
-];
+import { useMemo, useState } from "react";
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, signOut, getUserRole } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navLinks = useMemo(() => {
+    const studentBase = "/dashboard/student/career-gateway";
+    const isStudent = user?.role === "student";
+    return [
+      { to: "/", label: "Home", icon: Home },
+      { to: isStudent ? `${studentBase}/scholarships` : "/auth", label: "Scholarships", icon: Award },
+      { to: isStudent ? `${studentBase}/entrance-exams` : "/auth", label: "Entrance Exams", icon: FileQuestion },
+      { to: isStudent ? `${studentBase}/jobs-after-12th` : "/auth", label: "Jobs", icon: Briefcase },
+      { to: isStudent ? `${studentBase}/career-roadmap` : "/auth", label: "Career Roadmap", icon: Map },
+      { to: isStudent ? `${studentBase}/practice` : "/auth", label: "Practice", icon: BookOpen },
+      { to: isStudent ? `${studentBase}/test-series` : "/auth", label: "Test Series", icon: ClipboardList },
+      { to: isStudent ? `${studentBase}/locker` : "/auth", label: "My Locker", icon: FolderOpen },
+      { to: "/about", label: "About", icon: Info },
+    ];
+  }, [user?.role]);
 
   const handleDashboard = async () => {
     if (user) {

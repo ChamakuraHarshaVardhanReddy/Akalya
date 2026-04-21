@@ -32,14 +32,22 @@ const PORT = process.env.PORT || 3001;
    --------------------------------------------------- */
 const allowedOrigins = [
   'http://localhost:8080',
+  'http://localhost:8081',
   'http://localhost:5173',
   'https://vedalya-remote-classroom.vercel.app',
   'https://vedalya-remote-classroom-pzt2.onrender.com'
 ];
 
+const isAllowedOrigin = (origin) => {
+  if (!origin) return true;
+  if (allowedOrigins.includes(origin)) return true;
+  // Allow any localhost port in local development (e.g., Vite fallback ports)
+  return /^https?:\/\/localhost:\d+$/.test(origin);
+};
+
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-  if (origin && allowedOrigins.includes(origin)) {
+  if (origin && isAllowedOrigin(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
   }
 
@@ -64,7 +72,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (isAllowedOrigin(origin)) {
         return callback(null, true);
       }
       return callback(new Error("CORS: Not allowed"));

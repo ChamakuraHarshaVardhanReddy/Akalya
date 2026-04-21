@@ -6,7 +6,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
-import { ChatbotWidget } from "@/components/ChatbotWidget";
 import { StudentDashboardLayout } from "@/components/StudentDashboardLayout";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
@@ -101,7 +100,6 @@ const App = () => (
 
               <Route path="*" element={<NotFound />} />
             </Routes>
-            <ChatbotWidget />
           </BrowserRouter>
         </TooltipProvider>
       </LanguageProvider>
